@@ -32,7 +32,9 @@ void setup() {
   pinMode(PIN_BUTTON, INPUT);
   led.On();
   pixels.begin();
+  hoursPassed = 255;
   setPixels();
+  hoursPassed = 0;
 }
 
 void setPixels() {
