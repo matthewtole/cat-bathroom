@@ -40,7 +40,7 @@ void setup() {
 void setPixels() {
   for(int i = 0; i < NUM_PIXELS; i += 1) {
     bool isPixelOn = bitRead(hoursPassed, i) == 1;
-    pixels.setPixelColor(i, isPixelOn ? pixels.Color(20,20,20): pixels.Color(0,0,0));
+    pixels.setPixelColor(i, isPixelOn ? pixels.Color(5,5,5): pixels.Color(0,0,0));
   }
   pixels.show();
 }
