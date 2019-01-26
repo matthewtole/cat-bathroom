@@ -9,8 +9,8 @@ const int MODE_OK = 0;
 const int MODE_WARN = 1;
 const int MODE_FLASH = 2;
 
-const int WARN_HOURS = 10;//2 * 24;
-const int FLASH_HOURS= 20;//3 * 24;
+const int WARN_HOURS = 2 * 24;
+const int FLASH_HOURS= 3 * 24;
 const int HOUR_SECONDS = 60 * 60;
 
 const int PIN_BUTTON = 2;
