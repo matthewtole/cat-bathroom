@@ -5,6 +5,9 @@
 #include <avr/power.h>
 #endif
 
+// Uncomment if the Neopixels are connected for debugging
+// #define ENABLE_NEOPIXELS
+
 const int MODE_OK = 0;
 const int MODE_WARN = 1;
 const int MODE_FLASH = 2;
@@ -15,14 +18,16 @@ const int HOUR_SECONDS = 60 * 60;
 
 const int PIN_BUTTON = 2;
 const int PIN_LED = 3;
-const int PIN_NEOPIXEL = 6;
 
+#ifdef ENABLE_NEOPIXELS
+const int PIN_NEOPIXEL = 6;
 const int NUM_PIXELS = 8;
+Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUM_PIXELS, PIN_NEOPIXEL, NEO_GRB + NEO_KHZ800);
+#endif
 
 int buttonState;
 int mode = MODE_WARN;
 int hoursPassed = 0;
-Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUM_PIXELS, PIN_NEOPIXEL, NEO_GRB + NEO_KHZ800);
 
 Chrono chronoSeconds(Chrono::SECONDS);
 JLed led = JLed(PIN_LED);
@@ -31,21 +36,26 @@ void setup()
 {
   pinMode(PIN_LED, OUTPUT);
   pinMode(PIN_BUTTON, INPUT);
-  led.On();
+  led.Blink(100, 100).Forever();
+
+#ifdef ENABLE_NEOPIXELS
   pixels.begin();
   hoursPassed = 255;
   setPixels();
   hoursPassed = 0;
+#endif
 }
 
 void setPixels()
 {
+#ifdef ENABLE_NEOPIXELS
   for (int i = 0; i < NUM_PIXELS; i += 1)
   {
     bool isPixelOn = bitRead(hoursPassed, i) == 1;
     pixels.setPixelColor(i, isPixelOn ? pixels.Color(5, 5, 5) : pixels.Color(0, 0, 0));
   }
   pixels.show();
+#endif ENABLE_NEOPIXELS
 }
 
 void resetTimer()
